@@ -1,6 +1,8 @@
-# East Coast Telepsychiatry
+# East Coast Telepsychiatry - Mobile App
 
-A comprehensive, HIPAA-compliant telehealth platform serving both patients and mental health providers with secure video appointments, mental health tracking, and therapeutic tools.
+A comprehensive, HIPAA-compliant React Native mobile application serving both patients and mental health providers with secure video appointments, mental health tracking, and therapeutic tools.
+
+> **🚀 Native iOS & Android Mobile App** - Built with React Native for a seamless native mobile experience
 
 ## Overview
 
@@ -81,14 +83,15 @@ East Coast Telepsychiatry is a dual-interface application that provides remote p
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Vite
-- **Styling**: TailwindCSS with custom design system
+- **Framework**: React Native 0.73 + TypeScript
+- **Navigation**: React Navigation v6 (Stack & Bottom Tabs)
 - **State Management**: Zustand
 - **Database**: Supabase (PostgreSQL)
 - **Authentication**: Supabase Auth (Email/Password)
-- **Charts**: Recharts
-- **Routing**: React Router v6
+- **Charts**: react-native-svg-charts
+- **UI Components**: React Native Vector Icons
 - **Date Handling**: date-fns
+- **Platform**: iOS & Android (cross-platform)
 
 ## Security & Compliance
 
@@ -151,71 +154,112 @@ The application includes AI-powered insights that:
 ### Prerequisites
 - Node.js 18+
 - npm or yarn
-- Supabase credentials (pre-configured in `.env`)
+- **iOS Development**: macOS with Xcode 14+
+- **Android Development**: Android Studio with SDK 31+
+- React Native CLI: `npm install -g react-native-cli`
+- CocoaPods (for iOS): `sudo gem install cocoapods`
 
 ### Installation
 
-1. Install dependencies:
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd ECT_SB
+```
+
+2. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Environment variables are pre-configured in `.env`:
-   - `VITE_SUPABASE_URL`
-   - `VITE_SUPABASE_SUPABASE_ANON_KEY`
+3. Install iOS dependencies (macOS only):
+```bash
+cd ios && pod install && cd ..
+```
 
-3. Database is already set up with migrations applied automatically
+4. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Add your Supabase credentials:
+     - `SUPABASE_URL` - Your Supabase project URL
+     - `SUPABASE_ANON_KEY` - Your Supabase anonymous key
+     - `TEBRA_API_KEY` - Tebra video integration key
+     - `TEBRA_CLIENT_ID` - Tebra client ID
 
 ### Development
 
-The dev server is available for local testing.
-
-### Build
-
+**Run on iOS Simulator:**
 ```bash
-npm run build
+npm run ios
 ```
 
-Builds the application to the `dist/` directory for production deployment.
+**Run on Android Emulator:**
+```bash
+npm run android
+```
+
+**Start Metro Bundler:**
+```bash
+npm start
+```
+
+### Build for Production
+
+**iOS:**
+```bash
+cd ios
+xcodebuild -workspace EastCoastTelepsychiatry.xcworkspace -scheme EastCoastTelepsychiatry -configuration Release
+```
+
+**Android:**
+```bash
+cd android
+./gradlew assembleRelease
+```
+
+The APK will be located at `android/app/build/outputs/apk/release/app-release.apk`
 
 ## Project Structure
 
 ```
-src/
-├── components/
-│   ├── auth/              # Authentication pages
-│   │   ├── AuthPage.tsx
-│   │   ├── LoginForm.tsx
-│   │   └── SignupForm.tsx
-│   └── shared/            # Reusable components
-│       ├── Navigation.tsx
-│       ├── Modal.tsx
-│       └── LoadingSpinner.tsx
-├── lib/
-│   ├── supabase.ts        # Supabase client
-│   ├── aiInsights.ts      # AI prompt generation
-│   └── seedData.ts        # Sample data
-├── pages/
-│   ├── patient/           # Patient-facing pages
-│   │   ├── PatientHome.tsx
-│   │   ├── ProviderDirectory.tsx
-│   │   ├── PatientAppointments.tsx
-│   │   ├── PatientMessages.tsx
-│   │   ├── HealthTracker.tsx
-│   │   ├── SelfHelpTools.tsx
-│   │   └── EmergencyProtocol.tsx
-│   └── provider/          # Provider-facing pages
-│       ├── ProviderDashboard.tsx
-│       ├── ProviderPatients.tsx
-│       ├── PatientDetails.tsx
-│       └── ProviderMessages.tsx
-├── store/
-│   └── authStore.ts       # Authentication state management
-├── types/
-│   └── database.ts        # Database type definitions
-├── App.tsx                # Main routing
-├── main.tsx               # Entry point
-└── index.css              # Global styles
+ECT_SB/
+├── assets/
+│   └── images/            # Logo and images
+├── src/
+│   ├── components/
+│   │   ├── auth/          # Authentication components
+│   │   ├── patient/       # Patient-specific components
+│   │   ├── provider/      # Provider-specific components
+│   │   └── shared/        # Reusable components
+│   ├── screens/
+│   │   ├── common/        # Auth screens
+│   │   │   ├── LoginScreen.tsx
+│   │   │   └── SignupScreen.tsx
+│   │   ├── patient/       # Patient screens
+│   │   │   ├── PatientHomeScreen.tsx
+│   │   │   ├── ProviderDirectoryScreen.tsx
+│   │   │   ├── PatientAppointmentsScreen.tsx
+│   │   │   ├── PatientMessagesScreen.tsx
+│   │   │   ├── HealthTrackerScreen.tsx
+│   │   │   ├── SelfHelpToolsScreen.tsx
+│   │   │   └── EmergencyProtocolScreen.tsx
+│   │   └── provider/      # Provider screens
+│   │       ├── ProviderDashboardScreen.tsx
+│   │       ├── ProviderPatientsScreen.tsx
+│   │       ├── PatientDetailsScreen.tsx
+│   │       └── ProviderMessagesScreen.tsx
+│   ├── navigation/
+│   │   └── AppNavigator.tsx  # Navigation configuration
+│   ├── lib/
+│   │   └── supabase.ts    # Supabase client
+│   ├── store/
+│   │   └── authStore.ts   # Zustand auth state
+│   ├── types/
+│   │   └── database.ts    # TypeScript types
+│   └── App.tsx            # Root component
+├── index.js               # Entry point
+├── app.json               # App configuration
+├── package.json           # Dependencies
+└── tsconfig.json          # TypeScript config
 ```
 
 ## User Flows
@@ -299,28 +343,55 @@ src/
 
 ## Deployment
 
-The application is ready for deployment to:
-- Vercel
-- Netlify
-- AWS Amplify
-- Self-hosted servers
+### iOS App Store
 
-Environment variables must be configured before deployment.
+1. Configure signing in Xcode with your Apple Developer account
+2. Archive the app: Product → Archive
+3. Upload to App Store Connect
+4. Submit for review
+
+### Google Play Store
+
+1. Generate a signed APK or AAB:
+   ```bash
+   cd android
+   ./gradlew bundleRelease
+   ```
+2. Upload to Google Play Console
+3. Complete store listing and submit for review
+
+### Environment Variables
+
+Ensure all production environment variables are configured:
+- Supabase production URL and keys
+- Tebra API credentials
+- Any additional third-party service keys
+
+### Required Accounts
+
+- **Apple Developer Account** ($99/year) - for iOS deployment
+- **Google Play Developer Account** ($25 one-time) - for Android deployment
+- **Supabase** - Backend and database
+- **Tebra** - Video appointment integration
 
 ## Future Enhancements
 
-- Video appointment scheduling with in-app video
-- Prescription management system
-- Treatment plan tracking
-- Group therapy sessions
-- Insurance integration and billing
-- Mobile apps (iOS/Android)
-- Multi-language support
-- Telehealth sessions with in-app video capability
-- Medication reminders and refill tracking
-- Provider notes and clinical documentation
-- Patient portal for sharing medical records
-- Integration with EHR systems
+- **In-app video calling** with WebRTC integration
+- **Push notifications** for appointment reminders and messages
+- **Biometric authentication** (Face ID/Touch ID & Fingerprint)
+- **Offline mode** with local data caching
+- **Prescription management** system
+- **Treatment plan tracking** and progress monitoring
+- **Group therapy sessions** support
+- **Insurance integration** and billing
+- **Multi-language support** (Spanish, Mandarin, etc.)
+- **Medication reminders** and refill tracking
+- **Provider notes** and clinical documentation
+- **Health data integration** (Apple Health, Google Fit)
+- **EHR system integration** (Epic, Cerner)
+- **Wearable device support** for mood/activity tracking
+- **AI-powered insights** using GPT for mental health analysis
+- **Crisis intervention** features with location services
 
 ## Testing
 

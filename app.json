@@ -1,0 +1,39 @@
+{
+  "name": "EastCoastTelepsychiatry",
+  "displayName": "East Coast Telepsychiatry",
+  "expo": {
+    "name": "East Coast Telepsychiatry",
+    "slug": "east-coast-telepsychiatry",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/logo.jpg",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/images/logo.jpg",
+      "resizeMode": "contain",
+      "backgroundColor": "#1E40AF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.eastcoasttelepsychiatry.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/logo.jpg",
+        "backgroundColor": "#1E40AF"
+      },
+      "package": "com.eastcoasttelepsychiatry.app",
+      "permissions": [
+        "CAMERA",
+        "RECORD_AUDIO",
+        "INTERNET"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/images/logo.jpg"
+    }
+  }
+}
